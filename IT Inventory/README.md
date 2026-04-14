@@ -23,11 +23,16 @@ A tool to monitor all IT devices
 ## Features
 
 * Total of records found in # of seconds
+* Color entire row if status is Disposed
 
 
 
 ## Roadmap
 
+* 2026-04-14: Add: Color entire row if status is Disposed (show.php)
+* 2026-04-14: Fix: IP2 changed to match ###.###.###.###
+* 2026-04-09: Add: add \n in echo so the view source of the pages can be readable
+* 2026-04-03: Changed: removed PHP code for go back (previous page) and inserted JS code
 * 2026-03-31: Fix: removed message showing # seconds until previous page
 * 2026-03-31: Add: total records found
 * 2026-03-31: Fix: some table formatting

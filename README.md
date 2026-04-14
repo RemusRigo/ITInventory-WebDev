@@ -3,12 +3,10 @@
 A tool to monitor all IT devices
 
 
-
 ## Authors
 
 * [@remusrigo](https://github.com/RemusRigo)
 * [@remusrigo](https://sourceforge.net/u/remusrigo/profile)
-
 
 
 ## Installation
@@ -19,21 +17,16 @@ A tool to monitor all IT devices
 * default password: admin
 
 
-
 ## Features
 
 * Total of records found in # of seconds
 
 
-
 ## Roadmap
 
-<<<<<<< HEAD
 * 2026-03-31: Fix: Add: total records found
-=======
 * 2026-03-31: Fix: removed message showing # seconds until previous page
 * 2026-03-31: Add: total records found
->>>>>>> 3ec6966 (2026-04-06 21:36:37)
 * 2026-03-31: Fix: some table formatting
 * 2026-03-20: Fix: show notes with paragraphs (if entered) instead of a single line of data
 * 2026-03-20: Fix: notes not showing on edit device
