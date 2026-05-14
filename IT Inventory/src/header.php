@@ -2,7 +2,7 @@
 //-------------------------------------------------------------------------------------------------
 //   IT Inventory
 //      © 2025 Remus Rigo
-//         v20260303
+//         v2026-05-11
 //   header
 //-------------------------------------------------------------------------------------------------
 
@@ -38,20 +38,16 @@ if (isset($_GET['addDevice']) or isset($_GET['updateDevice']))
 
 echo "\n</head>\n<body>";
 
+// Load config file
 $configPath = __DIR__ . '/../json/config.json';
 $config = json_decode(file_get_contents($configPath), true);
-// Check if refresh needed
-//if (!empty($config['refresh']))
-//{
-//   $config['refresh'] = false;
-//   file_put_contents($configPath, json_encode($config, JSON_PRETTY_PRINT));
-//   echo "refresh";
-//   echo "<script>location.reload();</script>";
-//   exit;
-//}
 
-// Load language
-$langCode = $config['language'] ?? 'en'; // default if missing
+// get settings (if missing load defaults)
+$langCode = $config['language'] ?? 'en';
+$User = $config['User'] ?? 'root';
+$UserPsw = $config['UserPsw'] ?? '';
+
+// Get language data
 $langFile = "json/lng/{$langCode}.json";
 if (file_exists($langFile))
 {
@@ -61,5 +57,5 @@ else
 {
    $cfgLang = []; // fallback if file missing
 }
-   
+
 ?>

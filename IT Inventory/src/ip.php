@@ -2,7 +2,7 @@
 //-------------------------------------------------------------------------------------------------
 //   IT Inventory
 //      © 2025 Remus Rigo
-//         v20260406
+//         v2026-05-11
 //   add IP range form
 //-------------------------------------------------------------------------------------------------
 
@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') // Receive form data ----------------
    $octet4from = $_POST['octet4from'];
    $octet4to = $_POST['octet4to'];
 
-   $pdo = new PDO("mysql:host=localhost;dbname=it_db", "root", "");
+   $pdo = new PDO("mysql:host=localhost;dbname=it_db", $User, $UserPsw);
    $stmt = $pdo->prepare("INSERT INTO ip (IPv4) VALUES (:ip)");
 
    for ($i = $octet4from; $i <= $octet4to; $i++)

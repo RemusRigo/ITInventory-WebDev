@@ -2,14 +2,14 @@
 //-------------------------------------------------------------------------------------------------
 //   IT Inventory
 //      © 2025 Remus Rigo
-//         v20260406
+//         v2026-05-11
 //   Add/Update device
 //-------------------------------------------------------------------------------------------------
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET')
 {
-   $pdo = new PDO("mysql:host=localhost;dbname=it_db;charset=utf8", "root", "");
+   $pdo = new PDO("mysql:host=localhost;dbname=it_db;charset=utf8", $User, $UserPsw);
    $newDevice = null;
    if (isset($_GET['addDevice']))
    {
@@ -162,9 +162,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET')
 }
 
 //-------------------------------------------------------------------------------------------------
-function AddDevice()
+function AddDevice($User, $UserPsw)
 {
-   $conn = new mysqli("localhost", "root", "", "it_db");
+   $conn = new mysqli("localhost", $User, $UserPsw, "it_db");
 
    if ($conn->connect_error) {
       die("Connection failed: " . $conn->connect_error);
@@ -236,13 +236,19 @@ function AddDevice()
    $stmt = null;
    $conn->close();
    
-   echo "<script>history.back();</script>";
+   echo "<script>
+   history.go(-2);
+   window.addEventListener('pageshow', function() {
+      location.reload(true);
+   });
+   </script>";
+
 }
 
 //-------------------------------------------------------------------------------------------------
-function UpdateDevice()
+function UpdateDevice($User, $UserPsw)
 {
-   $pdo = new PDO("mysql:host=localhost;dbname=it_db;charset=utf8", "root", "");
+   $pdo = new PDO("mysql:host=localhost;dbname=it_db;charset=utf8", $User, $UserPsw);
 
    // Insert NULL is value is empty
    function EmptyToNull($val)
@@ -294,22 +300,34 @@ function UpdateDevice()
 
    $stmt = null;
 
-   echo "<script>history.go(-2);</script>";
+   echo "<script>
+   history.go(-2);
+   window.addEventListener('pageshow', function() {
+      location.reload(true);
+   });
+   </script>";
+
 }
 
 //-------------------------------------------------------------------------------------------------
 if ($_SERVER['REQUEST_METHOD'] === 'POST')
 {
+   // Load config file
+   $configPath = __DIR__ . '/../json/config.json';
+   $config = json_decode(file_get_contents($configPath), true);
+   $User = $config['User'] ?? 'root';
+   $UserPsw = $config['UserPsw'] ?? '';
+
    if (isset($_GET['mode']))
    {
       if ($_GET['mode'] === 'add')
       {
-         AddDevice();
+         AddDevice($User, $UserPsw);
       }
 
       if ($_GET['mode'] === 'update')
       {
-         UpdateDevice();
+         UpdateDevice($User, $UserPsw);
       }
    }
 }

@@ -2,18 +2,20 @@
 //-------------------------------------------------------------------------------------------------
 //   IT Inventory
 //      © 2025 Remus Rigo
-//         v20260414
+//         v2026-05-11
 //   show devices
 //-------------------------------------------------------------------------------------------------
 
 // starting time for sql query
 $start = microtime(true);
 
+$showCat=htmlspecialchars($_GET['cat']);
+
 if ($showCat == "all")
 {
    $sql = "SELECT
-         devices.id, devices.name,
-         devices.device, devices.manufacturer, devices.model, category.name AS category_name,
+         devices.id, devices.hostname,
+         devices.description, devices.manufacturer, devices.model, category.name AS category_name,
          devices.inventory, devices.sn,
          ip.IPv4 as ip_id, devices.ip_isactive, devices.ip2,
          devices.mac, devices.mac2, devices.bt, devices.phone_no, devices.IMEI1, devices.IMEI2, devices.pn, devices.firmware,
@@ -39,8 +41,8 @@ else
    if (is_numeric($showCat))
    {
       $sql = "SELECT
-            devices.id, devices.name,
-            devices.device, devices.manufacturer, devices.model, category.name AS category_name,
+            devices.id, devices.hostname,
+            devices.description, devices.manufacturer, devices.model, category.name AS category_name,
             devices.inventory, devices.sn,
             ip.IPv4 as ip_id, devices.ip_isactive, devices.ip2,
             devices.mac, devices.mac2, devices.bt, devices.phone_no, devices.IMEI1, devices.IMEI2, devices.pn, devices.firmware,
@@ -63,7 +65,7 @@ else
    }
 }
 
-$conn = new mysqli("localhost", "root", "", "it_db");
+$conn = new mysqli("localhost", $User, $UserPsw, "it_db");
 if ($conn->connect_error)
 {
    die("Database connection failed: " . $conn->connect_error);
@@ -84,8 +86,8 @@ if ($result->num_rows > 0)
 
    echo "\n<tr>";
    echo "<th>ID</th>";
-   echo "<th>{$cfgLang['Name']}</th>";
-   echo "<th>{$cfgLang['Device']}</th>";
+   echo "<th>{$cfgLang['HostName']}</th>";
+   echo "<th>{$cfgLang['Description']}</th>";
    echo "<th>{$cfgLang['Manufacturer']}</th>";
    echo "<th>{$cfgLang['Model']}<br>";
    // Model filter
@@ -135,8 +137,8 @@ if ($result->num_rows > 0)
          echo "<td>" . htmlspecialchars($row['id']) . "</td>";
       }    
 
-      echo "<td>" . htmlspecialchars($row['name']) . "</td>";
-      echo "<td>" . htmlspecialchars($row['device']) . "</td>";
+      echo "<td>" . htmlspecialchars($row['hostname']) . "</td>";
+      echo "<td>" . htmlspecialchars($row['description']) . "</td>";
       echo "<td>" . htmlspecialchars($row['manufacturer']) . "</td>";
       echo "<td>" . htmlspecialchars($row['model']) . "</td>";
       echo "<td>" . htmlspecialchars($row['category_name']) . "</td>";

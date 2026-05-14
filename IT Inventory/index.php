@@ -6,19 +6,20 @@
 //   main page 
 //-------------------------------------------------------------------------------------------------
 
-
 session_start();
 
-
 // check if user is logged
-if (isset($_SESSION['user_id'])) {
+if (isset($_SESSION['user_id']))
+{
    $loggedUser=htmlspecialchars($_SESSION['username']);
 }
 
+//-------------------------------------------------------------------------------------------------
 // HTML header
 include 'src/header.php';
 
-// build header section/menu
+//-------------------------------------------------------------------------------------------------
+// header section & menu
 
 echo "<div class='header'>";
    // is user is logged, build menu
@@ -26,11 +27,7 @@ echo "<div class='header'>";
    {
       echo "<div class='menu'>";
       include 'src/menu.php';
-      echo "</div>";
-      echo "<div>IT Inventory</div>";
-      echo "<div>Welcome ";
-      echo $loggedUser;
-      echo "<a href='logout.php' style='font-size:8px;'>Logout</a></div>";
+      echo "</div><div>IT Inventory</div><div>Welcome $loggedUser <a href='logout.php' style='font-size:8px;'>Logout</a></div>";
    }
    else
    {
@@ -38,16 +35,20 @@ echo "<div class='header'>";
    }
 echo "</div>";
 
+//-------------------------------------------------------------------------------------------------
+// content area
 echo "<div class='content'>";
 
-// Receive form data -----------------------------------------------------------------------------------
+// Receive form data ------------------------------------------------------------------------------
 if ($_SERVER['REQUEST_METHOD'] === 'POST')
 {
    echo "POST";
 }
-// Receive form data -----------------------------------------------------------------------------------
-else if ($_SERVER['REQUEST_METHOD'] === 'GET')
+
+// Receive form data ------------------------------------------------------------------------------
+if ($_SERVER['REQUEST_METHOD'] === 'GET')
 {
+   // user is not logged in -----------------------------------------------------------------------
    if (empty($_SESSION['user_id']))
    {
       echo"
@@ -71,45 +72,57 @@ else if ($_SERVER['REQUEST_METHOD'] === 'GET')
         </form>
       </div>";
    }
-   else
+   else // user is logged in ----------------------------------------------------------------------
    {
-      // check language
-      if (isset($_GET['lang']))
+
+      //$config = json_decode(file_get_contents('json/config.json'), true);
+      //$config['language'] = $_GET['lang'];
+      //file_put_contents('json/config.json', json_encode($config, JSON_PRETTY_PRINT));
+
+      $actionFound = null;
+      $actions = ['addDevice', 'cat', 'IP', 'list', 'lang', 'manageIP', 'updateDevice'];
+
+      foreach ($actions as $action)
       {
-         $config = json_decode(file_get_contents('json/config.json'), true);
-         $config['language'] = $_GET['lang'];
-         file_put_contents('json/config.json', json_encode($config, JSON_PRETTY_PRINT));
-         $back = $_SERVER['HTTP_REFERER'] ?? 'index.php';
-         header("Location: $back");
-      }
-      
-      // process other params individually
-      $action=null;
-      foreach (['addDevice','updateDevice','edit','IP','search'] as $key)
-      {
-         if (isset($_GET[$key]))
+         if (isset($_GET[$action]))
          {
-            $action=$key;
-            break;
+            //if ($actionFound !== null)
+            //{
+            //   die("Error: Only one action allowed.");
+            //}
+         $actionFound = $action;
          }
       }
 
-      switch ($action)
+      switch ($actionFound)
       {
+         case 'lang':
+            $config = json_decode(file_get_contents('json/config.json'), true);
+            $config['language'] = $_GET['lang'];
+            file_put_contents('json/config.json', json_encode($config, JSON_PRETTY_PRINT));
+            $back = $_SERVER['HTTP_REFERER'] ?? 'index.php';
+            header("Location: $back");
+            break;
+
          case 'addDevice':
          case 'updateDevice':
             include 'src/dev.php';
             break;
 
+         case 'cat':
+            include 'src/show.php';
+            break;
+
          case 'IP':
             include 'src/ip.php';
             break;
-      }
-      
-      if (isset($_GET['cat']))
-      {
-         $showCat=htmlspecialchars($_GET['cat']);
-         include 'src/show.php';
+
+         case 'list':
+            include 'src/list.php';
+            break;
+
+         default:
+            break;
       }
    }
 }

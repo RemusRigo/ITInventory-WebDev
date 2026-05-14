@@ -3,10 +3,12 @@
 A tool to monitor all IT devices
 
 
+
 ## Authors
 
 * [@remusrigo](https://github.com/RemusRigo)
 * [@remusrigo](https://sourceforge.net/u/remusrigo/profile)
+
 
 
 ## Installation
@@ -17,14 +19,27 @@ A tool to monitor all IT devices
 * default password: admin
 
 
+
 ## Features
 
 * Total of records found in # of seconds
+* Color entire row if status is Disposed
+
 
 
 ## Roadmap
 
-* 2026-03-31: Fix: Add: total records found
+* 2026-05-14: Fix: link to IP Management
+* 2026-05-14: Add: List all IP's
+* 2026-05-14: Add: List all devices in location
+* 2026-05-13: Add: List locations
+* 2026-05-11: Change: root & root password for accessing MySQL DB stored in JSON config file
+* 2026-04-16: Change: rewrite index file / process parameters (index.php)
+* 2026-04-15: Change: rewrite main menu (src/menu.php)
+* 2026-04-14: Add: Color entire row if status is Disposed (src/show.php)
+* 2026-04-14: Fix: IP2 changed to match ###.###.###.###
+* 2026-04-09: Add: add \n in echo so the view source of the pages can be readable
+* 2026-04-03: Changed: removed PHP code for go back (previous page) and inserted JS code
 * 2026-03-31: Fix: removed message showing # seconds until previous page
 * 2026-03-31: Add: total records found
 * 2026-03-31: Fix: some table formatting

@@ -29,7 +29,14 @@ A tool to monitor all IT devices
 
 ## Roadmap
 
-* 2026-04-14: Add: Color entire row if status is Disposed (show.php)
+* 2026-05-14: Fix: link to IP Management
+* 2026-05-14: Add: List all IP's
+* 2026-05-14: Add: List all devices in location
+* 2026-05-13: Add: List locations
+* 2026-05-11: Change: root & root password for accessing MySQL DB stored in JSON config file
+* 2026-04-16: Change: rewrite index file / process parameters (index.php)
+* 2026-04-15: Change: rewrite main menu (src/menu.php)
+* 2026-04-14: Add: Color entire row if status is Disposed (src/show.php)
 * 2026-04-14: Fix: IP2 changed to match ###.###.###.###
 * 2026-04-09: Add: add \n in echo so the view source of the pages can be readable
 * 2026-04-03: Changed: removed PHP code for go back (previous page) and inserted JS code
