@@ -2,7 +2,7 @@
 //-------------------------------------------------------------------------------------------------
 //   IT Inventory
 //      © 2025 Remus Rigo
-//         v2026-05-11
+//         v2026-05-15
 //   Add/Update device
 //-------------------------------------------------------------------------------------------------
 
@@ -50,8 +50,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET')
    {
       echo "\n<tr><td><label>ID</label></td><td><input type='text' name='id' value='". htmlspecialchars($device['id'])."' readonly></td></tr>";
    }
-   echo "\n<tr><td><label>{$cfgLang['Name']}</label></td><td><input type='text' name='name' value='". ($newDevice ? "'" : htmlspecialchars($device['name']))."'></td></tr>";
-   echo "\n<tr><td><label>{$cfgLang['Device']}</label></td><td><input type='text' name='device' value='". ($newDevice ? "'" : htmlspecialchars($device['device']))."'></td></tr>";
+   echo "\n<tr><td><label>{$cfgLang['HostName']}</label></td><td><input type='text' name='hostname' value='". ($newDevice ? "'" : htmlspecialchars($device['hostname']))."'></td></tr>";
+   echo "\n<tr><td><label>{$cfgLang['Description']}</label></td><td><input type='text' name='description' value='". ($newDevice ? "'" : htmlspecialchars($device['description']))."'></td></tr>";
    echo "\n<tr><td><label>{$cfgLang['Manufacturer']}</label></td><td><input type='text' name='manufacturer' value='". ($newDevice ? "'" : htmlspecialchars($device['manufacturer']))."'></td></tr>";
    echo "\n<tr><td><label>{$cfgLang['Model']}</label></td><td><input type='text' name='model' value='". ($newDevice ? "'" : htmlspecialchars($device['model']))."'></td></tr>";
    
@@ -177,36 +177,36 @@ function AddDevice($User, $UserPsw)
    }
 
    // Read form data
-   $name = EmptyToNull($_POST['name']);
-   $device = EmptyToNull($_POST['device']);
+   $hostname     = EmptyToNull($_POST['hostname']);
+   $description  = EmptyToNull($_POST['description']);
    $manufacturer = EmptyToNull($_POST['manufacturer']);
-   $model = EmptyToNull($_POST['model']);
-   $category = EmptyToNull($_POST['category_id']);
-   $inventory = EmptyToNull($_POST['inventory']);
-   $sn = EmptyToNull($_POST['sn']);
-   $ip = EmptyToNull($_POST['ip_id']);
-   $ip2 = EmptyToNull($_POST['ip2']);
-   $ip_isactive = $_POST['ip_isactive'];
-   $mac = EmptyToNull($_POST['mac']);
-   $mac2 = EmptyToNull($_POST['mac2']);
-   $bt = EmptyToNull($_POST['bt']);
-   $phone_no = EmptyToNull($_POST['phone_no']);
-   $IMEI1 = EmptyToNull($_POST['IMEI1']);
-   $IMEI2 = EmptyToNull($_POST['IMEI2']);
-   $pn = EmptyToNull($_POST['pn']);
-   $firmware = EmptyToNull($_POST['firmware']);
-   $custodian = EmptyToNull($_POST['custodian']);
-   $location1 = EmptyToNull($_POST['location1']);
-   $location2 = EmptyToNull($_POST['location2']);
-   $purchased = EmptyToNull($_POST['purchased']);
-   $status = EmptyToNull($_POST['status_id']);
-   $disposed = EmptyToNull($_POST['disposed']);
-   $notes = $_POST['notes'];
+   $model        = EmptyToNull($_POST['model']);
+   $category     = EmptyToNull($_POST['category_id']);
+   $inventory    = EmptyToNull($_POST['inventory']);
+   $sn           = EmptyToNull($_POST['sn']);
+   $ip           = EmptyToNull($_POST['ip_id']);
+   $ip2          = EmptyToNull($_POST['ip2']);
+   $ip_isactive  = $_POST['ip_isactive'];
+   $mac          = EmptyToNull($_POST['mac']);
+   $mac2         = EmptyToNull($_POST['mac2']);
+   $bt           = EmptyToNull($_POST['bt']);
+   $phone_no     = EmptyToNull($_POST['phone_no']);
+   $IMEI1        = EmptyToNull($_POST['IMEI1']);
+   $IMEI2        = EmptyToNull($_POST['IMEI2']);
+   $pn           = EmptyToNull($_POST['pn']);
+   $firmware     = EmptyToNull($_POST['firmware']);
+   $custodian    = EmptyToNull($_POST['custodian']);
+   $location1    = EmptyToNull($_POST['location1']);
+   $location2    = EmptyToNull($_POST['location2']);
+   $purchased    = EmptyToNull($_POST['purchased']);
+   $status       = EmptyToNull($_POST['status_id']);
+   $disposed     = EmptyToNull($_POST['disposed']);
+   $notes        = $_POST['notes'];
 
    // SQL statement
    $stmt = $conn->prepare("INSERT INTO devices (
-      name,
-      device,
+      hostname,
+      description,
       manufacturer, model, category_id, inventory, sn,
       ip_id, ip_isactive, ip2, mac, mac2, bt, phone_no, IMEI1, IMEI2, pn, firmware,
       custodian, location1, location2,
@@ -216,8 +216,8 @@ function AddDevice($User, $UserPsw)
    ");
 
    $stmt->bind_param("sssssssssssssssssssssssss",
-      $name,
-      $device,
+      $hostname,
+      $description,
       $manufacturer, $model, $category, $inventory, $sn,
       $ip, $ip_isactive, $ip2, $mac, $mac2, $bt, $phone_no, $IMEI1, $IMEI2, $pn, $firmware,
       $custodian, $location1, $location2,
@@ -258,8 +258,8 @@ function UpdateDevice($User, $UserPsw)
 
    // Read form data
    $id = EmptyToNull($_POST['id']);
-   $name = EmptyToNull($_POST['name']);
-   $device = EmptyToNull($_POST['device']);
+   $hostname = EmptyToNull($_POST['hostname']);
+   $description = EmptyToNull($_POST['description']);
    $manufacturer = EmptyToNull($_POST['manufacturer']);
    $model = EmptyToNull($_POST['model']);
    $category_id = EmptyToNull($_POST['category_id']);
@@ -286,7 +286,7 @@ function UpdateDevice($User, $UserPsw)
    $notes = $_POST['notes'];
 
    $sql = "UPDATE devices SET
-      name = ?, device = ?,
+      hostname = ?, description = ?,
       manufacturer = ?, model = ?, category_id = ?, inventory = ?, sn = ?,
       ip_id = ?, ip_isactive = ?, ip2 = ?, mac = ?, mac2 = ?, bt = ?, phone_no = ?, IMEI1 = ?, IMEI2 = ?, pn = ?, firmware = ?,
       custodian = ?, location1 = ?, location2 = ?,
@@ -295,17 +295,17 @@ function UpdateDevice($User, $UserPsw)
 
    $stmt = $pdo->prepare($sql);
    
-   $stmt->execute([$name, $device, $manufacturer, $model, $category_id, $inventory, $sn, $ip_id, $ip_isactive, $ip2, $mac, $mac2, $bt, $phone_no, $IMEI1, $IMEI2, $pn, $firmware,
+   $stmt->execute([$hostname, $description, $manufacturer, $model, $category_id, $inventory, $sn, $ip_id, $ip_isactive, $ip2, $mac, $mac2, $bt, $phone_no, $IMEI1, $IMEI2, $pn, $firmware,
       $custodian, $location1, $location2, $status_id, $purchased, $disposed, $notes, $id]);
 
    $stmt = null;
 
-   echo "<script>
-   history.go(-2);
-   window.addEventListener('pageshow', function() {
-      location.reload(true);
-   });
-   </script>";
+//   echo "<script>
+//   history.go(-2);
+//   window.addEventListener('pageshow', function() {
+//      location.reload(true);
+//   });
+//   </script>";
 
 }
 

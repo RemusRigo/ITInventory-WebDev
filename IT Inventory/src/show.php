@@ -2,7 +2,7 @@
 //-------------------------------------------------------------------------------------------------
 //   IT Inventory
 //      © 2025 Remus Rigo
-//         v2026-05-11
+//         v2026-05-15
 //   show devices
 //-------------------------------------------------------------------------------------------------
 
@@ -80,6 +80,16 @@ $end = microtime(true);
 
 if ($result->num_rows > 0)
 {
+   if ($showCat == "all")
+   {
+      echo "<script>document.querySelector(\"div[name='header_title']\").innerHTML = \"IT Inventory: All devices\";</script>";
+   }
+   else
+   {
+      $hearer_row = $result->fetch_assoc();
+      echo "<script>document.querySelector(\"div[name='header_title']\").innerHTML = \"IT Inventory: ".$hearer_row['category_name']."\";</script>";
+   }
+
    // Header row
    echo "\n<table name='devices' id='devices' class='devices'>";
    echo "<thead>";

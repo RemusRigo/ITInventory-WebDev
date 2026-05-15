@@ -27,6 +27,12 @@ A tool to monitor all IT devices
 
 
 
+## Statistics
+
+![GitHub Downloads (specific asset, all releases)](https://img.shields.io/github/downloads/RemusRigo/ITInventory-WebDev/ITInventory-src.zip)
+
+
+
 ## Roadmap
 
 * 2026-05-14: Fix: link to IP Management
@@ -60,6 +66,3 @@ A tool to monitor all IT devices
 * 2025-12-26: Add: Add new device
 * 2025-12-16: Add: Menu for Standard/Admin user
 * 2025-12-11: Project started
-
-## 
-

@@ -81,6 +81,7 @@ if ($result->num_rows > 0)
       // Display only locations -------------------------------------------------------------------
       if (!isset($_GET['id']))
       {
+         echo "<script>document.querySelector(\"div[name='header_title']\").innerHTML = \"IT Inventory: Locations\";</script>";
          echo "\n<table name='devices' id='devices' class='devices'>";
          echo "<thead>";
          echo "\n<tr>";
@@ -99,7 +100,7 @@ if ($result->num_rows > 0)
       // Display all devices on location ----------------------------------------------------------
       if (isset($_GET['id']))
       {
-         echo "<h2>{$result->fetch_assoc()['location_name']}</h2>";
+         echo "<script>document.querySelector(\"div[name='header_title']\").innerHTML = \"IT Inventory: {$result->fetch_assoc()['location_name']}\";</script>";
          $result->data_seek(0);
 
          echo "\n<table name='devices' id='devices' class='devices'>";
@@ -133,7 +134,7 @@ if ($result->num_rows > 0)
 
    if ($list == "ip")
    {
-      echo "<h2>IP list</h2>";
+      echo "<script>document.querySelector(\"div[name='header_title']\").innerHTML = \"IT Inventory: IP list\";</script>";
       echo "\n<table name='devices' id='devices' class='devices'>";
       echo "<thead>";
       echo "\n<tr>";

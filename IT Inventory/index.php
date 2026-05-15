@@ -27,7 +27,7 @@ echo "<div class='header'>";
    {
       echo "<div class='menu'>";
       include 'src/menu.php';
-      echo "</div><div>IT Inventory</div><div>Welcome $loggedUser <a href='logout.php' style='font-size:8px;'>Logout</a></div>";
+      echo "</div><div name='header_title'>IT Inventory</div><div>Welcome $loggedUser <a href='logout.php' style='font-size:8px;'>Logout</a></div>";
    }
    else
    {

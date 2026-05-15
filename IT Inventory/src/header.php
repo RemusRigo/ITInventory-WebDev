@@ -11,7 +11,7 @@ $configPath = __DIR__ . '/../json/config.json';
 echo "<!DOCTYPE html>";
 echo "<html lang='en'>";
 echo "\n<head>";
-echo "\n<title>IT Inventory</title>";
+echo "\n<title name=''>IT Inventory</title>";
 echo "\n<meta charset='UTF-8'>";
 
 if (empty($_SESSION['user_id']))

@@ -29,6 +29,8 @@ A tool to monitor all IT devices
 
 ## Roadmap
 
+* 2026-05-15: Add: Current location in header title (like Category/Location/List...)
+* 2026-05-15: Change: renamed table names: devices.name to devices.hostname and devices.device to devices.description (and update sources)
 * 2026-05-14: Fix: link to IP Management
 * 2026-05-14: Add: List all IP's
 * 2026-05-14: Add: List all devices in location
