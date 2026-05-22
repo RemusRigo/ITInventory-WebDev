@@ -4,7 +4,7 @@
   "Custodian": "Custodian",
   "Description": "Description",
   "Disposed": "Disposed",
-  "Firmware": "Firmware",
+  "FW": "Firmware",
   "Inventory": "Inventory",
   "IMEI1": "IMEI 1",
   "IMEI2": "IMEI 2",
@@ -20,8 +20,9 @@
   "HostName": "Host Name", 
   "Notes": "Notes",
   "PhoneNumber": "Phone Number",
-  "Purchased": "Purchased",
   "PN": "PN",
+  "Port": "Port",
+  "Purchased": "Purchased",
   "SN": "SN",
   "Status": "Status"
 }

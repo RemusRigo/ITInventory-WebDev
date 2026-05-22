@@ -2,7 +2,7 @@
 //-------------------------------------------------------------------------------------------------
 //   IT Inventory
 //      © 2026 Remus Rigo
-//         v2026-05-14
+//         v2026-05-20
 //   list locations / devices / IP's
 //-------------------------------------------------------------------------------------------------
 
@@ -24,11 +24,17 @@ if ($list == "location")
    // Query all locations
    if (!isset($_GET['id']))
    {
-      $sql = "SELECT l.id, l.name
-         FROM locations l
-         JOIN devices d ON d.location1 = l.id
-         GROUP BY l.id, l.name
-         ORDER BY l.name";
+      // Show all locations
+      $sql = "SELECT id, name
+         FROM locations
+         ORDER BY name";
+
+      // Show only locations that have devices
+      //SELECT l.id, l.name
+      //   FROM locations l
+      //   JOIN devices d ON d.location1 = l.id
+      //   GROUP BY l.id, l.name
+      //   ORDER BY l.name
 
       $stmt = $conn->prepare($sql);
       $stmt->execute();
@@ -81,7 +87,7 @@ if ($result->num_rows > 0)
       // Display only locations -------------------------------------------------------------------
       if (!isset($_GET['id']))
       {
-         echo "<script>document.querySelector(\"div[name='header_title']\").innerHTML = \"IT Inventory: Locations\";</script>";
+         //echo "<script>document.querySelector(\"div[name='header_title']\").innerHTML = \"IT Inventory: Locations\";</script>";
          echo "\n<table name='devices' id='devices' class='devices'>";
          echo "<thead>";
          echo "\n<tr>";
@@ -100,7 +106,7 @@ if ($result->num_rows > 0)
       // Display all devices on location ----------------------------------------------------------
       if (isset($_GET['id']))
       {
-         echo "<script>document.querySelector(\"div[name='header_title']\").innerHTML = \"IT Inventory: {$result->fetch_assoc()['location_name']}\";</script>";
+         //echo "<script>document.querySelector(\"div[name='header_title']\").innerHTML = \"IT Inventory: {$result->fetch_assoc()['location_name']}\";</script>";
          $result->data_seek(0);
 
          echo "\n<table name='devices' id='devices' class='devices'>";

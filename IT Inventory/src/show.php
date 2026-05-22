@@ -17,8 +17,8 @@ if ($showCat == "all")
          devices.id, devices.hostname,
          devices.description, devices.manufacturer, devices.model, category.name AS category_name,
          devices.inventory, devices.sn,
-         ip.IPv4 as ip_id, devices.ip_isactive, devices.ip2,
-         devices.mac, devices.mac2, devices.bt, devices.phone_no, devices.IMEI1, devices.IMEI2, devices.pn, devices.firmware,
+         ip.IPv4 as ip_id, devices.ip_isactive, devices.port, devices.ip2,
+         devices.mac, devices.mac2, devices.bt, devices.phone_no, devices.IMEI1, devices.IMEI2, devices.pn, devices.fw,
          devices.custodian,
          locations.name as location1, devices.location2,
          status.name AS status_name, devices.purchased, devices.disposed,
@@ -28,7 +28,7 @@ if ($showCat == "all")
       LEFT JOIN ip AS ip ON devices.ip_id = ip.ID
       LEFT JOIN locations AS locations ON devices.location1 = locations.ID
       LEFT JOIN status ON devices.status_id = status.id
-      ORDER BY devices.id DESC";
+      ORDER BY devices.hostname ASC";
       
       $sqlModels = "SELECT DISTINCT model
          FROM devices
@@ -44,8 +44,8 @@ else
             devices.id, devices.hostname,
             devices.description, devices.manufacturer, devices.model, category.name AS category_name,
             devices.inventory, devices.sn,
-            ip.IPv4 as ip_id, devices.ip_isactive, devices.ip2,
-            devices.mac, devices.mac2, devices.bt, devices.phone_no, devices.IMEI1, devices.IMEI2, devices.pn, devices.firmware,
+            ip.IPv4 as ip_id, devices.ip_isactive, devices.port, devices.ip2,
+            devices.mac, devices.mac2, devices.bt, devices.phone_no, devices.IMEI1, devices.IMEI2, devices.pn, devices.fw,
             devices.custodian,
             locations.name as location1, devices.location2,
             status.name AS status_name, devices.purchased, devices.disposed,
@@ -56,12 +56,18 @@ else
          LEFT JOIN locations AS locations ON devices.location1 = locations.ID
          LEFT JOIN status ON devices.status_id = status.id
          WHERE category_id = $showCat
-         ORDER BY devices.id DESC";
+         ORDER BY devices.hostname";
          
       $sqlModels = "SELECT DISTINCT model, category_id
          FROM devices
          WHERE model IS NOT NULL AND model <> '' AND category_id = $showCat
          ORDER BY model";
+
+      $sqlCategory = "SELECT devices.id, category.name AS category_name
+         FROM devices
+         LEFT JOIN category ON devices.category_id = category.id
+         WHERE category_id = $showCat
+         LIMIT 1";
    }
 }
 
@@ -70,9 +76,10 @@ if ($conn->connect_error)
 {
    die("Database connection failed: " . $conn->connect_error);
 }
-$result = $conn->query($sql);
 
+$result = $conn->query($sql);
 $resultModels = $conn->query($sqlModels);
+
 $models = [];
 
 // ending time for sql query
@@ -86,8 +93,9 @@ if ($result->num_rows > 0)
    }
    else
    {
-      $hearer_row = $result->fetch_assoc();
-      echo "<script>document.querySelector(\"div[name='header_title']\").innerHTML = \"IT Inventory: ".$hearer_row['category_name']."\";</script>";
+      $resultCategory = $conn->query($sqlCategory);
+      $header_row = $resultCategory->fetch_assoc();
+      echo "<script>document.querySelector(\"div[name='header_title']\").innerHTML = \"IT Inventory: ".$header_row['category_name']."\";</script>";
    }
 
    // Header row
@@ -113,6 +121,7 @@ if ($result->num_rows > 0)
    echo "<th>{$cfgLang['Inventory']}</th>";
    echo "<th>{$cfgLang['SN']}</th>";
    echo "<th>{$cfgLang['IP1']}</th>";
+   echo "<th>{$cfgLang['Port']}</th>";
    echo "<th>{$cfgLang['IP2']}</th>";
    echo "<th>{$cfgLang['MAC']}</th>";
    echo "<th>{$cfgLang['MAC2']}</th>";
@@ -121,7 +130,7 @@ if ($result->num_rows > 0)
    echo "<th>{$cfgLang['IMEI1']}</th>";
    echo "<th>{$cfgLang['IMEI2']}</th>";
    echo "<th>{$cfgLang['PN']}</th>";
-   echo "<th>{$cfgLang['Firmware']}</th>";
+   echo "<th>{$cfgLang['FW']}</th>";
    echo "<th>{$cfgLang['Custodian']}</th>";
    echo "<th>{$cfgLang['Location1']}</th>";
    echo "<th>{$cfgLang['Location2']}</th>";
@@ -155,6 +164,7 @@ if ($result->num_rows > 0)
       echo "<td>" . htmlspecialchars($row['inventory']) . "</td>";    
       echo "<td>" . htmlspecialchars($row['sn']) . "</td>";
       echo "<td>" . htmlspecialchars($row['ip_id']) . ($row['ip_isactive'] ? " <b style='color: green;'>&checkmark;</b>" : "") . "</td>";
+      echo "<td>" . htmlspecialchars($row['port']) . "</td>";
       echo "<td>" . htmlspecialchars($row['ip2']) . "</td>";
       echo "<td>" . htmlspecialchars($row['mac']) . "</td>";
       echo "<td>" . htmlspecialchars($row['mac2']) . "</td>";
@@ -163,7 +173,7 @@ if ($result->num_rows > 0)
       echo "<td>" . htmlspecialchars($row['IMEI1']) . "</td>";
       echo "<td>" . htmlspecialchars($row['IMEI2']) . "</td>";
       echo "<td>" . htmlspecialchars($row['pn']) . "</td>";
-      echo "<td>" . htmlspecialchars($row['firmware']) . "</td>";
+      echo "<td>" . htmlspecialchars($row['fw']) . "</td>";
       echo "<td>" . htmlspecialchars($row['custodian']) . "</td>";
       echo "<td>" . htmlspecialchars($row['location1']) . "</td>";
       echo "<td>" . htmlspecialchars($row['location2']) . "</td>";
@@ -177,6 +187,12 @@ if ($result->num_rows > 0)
 
    $totalRows = $result->num_rows;
    echo "<p style='font-size:smaller;'>".$totalRows . " record" . ($totalRows == 1 ? "" : "s") . " found in ". ($end - $start) ." seconds";
+
+   if ($_GET['cat'] != "all")
+   {
+      echo "<script>HideTableEmptyColumns('devices');</script>";
+   }
+
 
 }
 else

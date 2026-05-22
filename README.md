@@ -22,19 +22,21 @@ A tool to monitor all IT devices
 
 ## Features
 
-* Total of records found in # of seconds
+* Hide empty columns (if a category is selected)
 * Color entire row if status is Disposed
+* Total of records found in # of seconds
 
-
-
-## Statistics
-
-![GitHub Downloads (specific asset, all releases)](https://img.shields.io/github/downloads/RemusRigo/ITInventory-WebDev/ITInventory-src.zip)
 
 
 
 ## Roadmap
 
+* 2026-05-20: Add: New field in devices -> port
+* 2026-05-20: Add: If a category is selected, hide empty columns
+* 2026-05-20: Fix: Show all locations instead of showing only locations that have devices (maybe a ToDo in the future)
+* 2026-05-18: Fix: first row from query not showing (created another query to retrieve current category)
+* 2026-05-15: Add: Current location in header title (like Category/Location/List...)
+* 2026-05-15: Change: renamed fields: devices.name to devices.hostname and devices.device to devices.description (and update sources)
 * 2026-05-14: Fix: link to IP Management
 * 2026-05-14: Add: List all IP's
 * 2026-05-14: Add: List all devices in location
@@ -58,11 +60,14 @@ A tool to monitor all IT devices
 * 2026-01-16: Edit: Link IP to device
 * 2026-01-15: Add: Add IP Range form
 * 2026-01-14: Edit: Add CSS style for login page
-* 2026-01-13: Edit: Shrinked font size of the menu
+* 2026-01-13: Edit: Reduced font size of the menu
 * 2026-01-13: Edit: Extract categories from DB and build menu
-* 2025-12-29: Add record: Custodian
+* 2025-12-29: Add: New record in devices -> Custodian
 * 2025-12-28: Add: Update device form
 * 2025-12-27: Add: Filter by category
 * 2025-12-26: Add: Add new device
-* 2025-12-16: Add: Menu for Standard/Admin user
+* 2025-12-16: Add: Separate menu for Standard/Admin user
 * 2025-12-11: Project started
+
+## 
+

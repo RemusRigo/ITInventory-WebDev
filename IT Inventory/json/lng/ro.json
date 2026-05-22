@@ -4,7 +4,7 @@
   "Custodian": "Custodian",
   "Description": "Descriere",
   "Disposed": "Casat",
-  "Firmware": "Firmware",
+  "FW": "Firmware",
   "Inventory": "Inventar",
   "IMEI1": "IMEI 1",
   "IMEI2": "IMEI 2",
@@ -20,8 +20,9 @@
   "HostName": "Nume Gazda",
   "Notes": "Note",
   "PhoneNumber": "Numar telefon",
-  "Purchased": "Achiziționat",
   "PN": "PN",
+  "Port": "Port",
+  "Purchased": "Achiziționat",
   "SN": "SN",
   "Status": "Stare"
 }

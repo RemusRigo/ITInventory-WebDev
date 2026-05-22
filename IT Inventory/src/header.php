@@ -2,7 +2,7 @@
 //-------------------------------------------------------------------------------------------------
 //   IT Inventory
 //      © 2025 Remus Rigo
-//         v2026-05-11
+//         v2026-05-21
 //   header
 //-------------------------------------------------------------------------------------------------
 
@@ -27,6 +27,7 @@ if (isset($_GET['cat']))
 {
    echo "\n<script src='js/show_devices.js' defer></script>";
    echo "\n<script src='js/update_filter.js' defer></script>";
+   echo "\n<script src='js/hide_columns.js'></script>";
 }
 
 if (isset($_GET['addDevice']) or isset($_GET['updateDevice']))

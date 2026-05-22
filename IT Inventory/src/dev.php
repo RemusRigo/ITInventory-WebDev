@@ -2,7 +2,7 @@
 //-------------------------------------------------------------------------------------------------
 //   IT Inventory
 //      © 2025 Remus Rigo
-//         v2026-05-15
+//         v2026-05-21
 //   Add/Update device
 //-------------------------------------------------------------------------------------------------
 
@@ -104,6 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET')
    }
    echo "</td></tr>";
 
+   echo "\n<tr><td><label>{$cfgLang['Port']}</label></td><td><input type='text' name='port' value='". ($newDevice ? "'" : htmlspecialchars($device['port']))."'></td></tr>";
    // IP Address 2
    echo "\n<tr><td><label>{$cfgLang['IP2']}</label></td><td><input type='text' name='ip2' value='". ($newDevice ? "'" : htmlspecialchars($device['ip2']))."'></td></tr>";
 
@@ -114,7 +115,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET')
    echo "\n<tr><td><label>{$cfgLang['IMEI1']}</label></td><td><input type='text' name='IMEI1' value='". ($newDevice ? "'" : htmlspecialchars($device['IMEI1']))."'></td></tr>";
    echo "\n<tr><td><label>{$cfgLang['IMEI2']}</label></td><td><input type='text' name='IMEI2' value='". ($newDevice ? "'" : htmlspecialchars($device['IMEI2']))."'></td></tr>";
    echo "\n<tr><td><label>{$cfgLang['PN']}</label></td><td><input type='text' name='pn' value='". ($newDevice ? "'" : htmlspecialchars($device['pn']))."'></td></tr>";
-   echo "\n<tr><td><label>{$cfgLang['Firmware']}</label></td><td><input type='text' name='firmware' value='". ($newDevice ? "'" : htmlspecialchars($device['firmware']))."'></td></tr>";
+   echo "\n<tr><td><label>{$cfgLang['FW']}</label></td><td><input type='text' name='fw' value='". ($newDevice ? "'" : htmlspecialchars($device['fw']))."'></td></tr>";
    echo "\n<tr><td><label>{$cfgLang['Custodian']}</label></td><td><input type='text' name='custodian' value='". ($newDevice ? "'" : htmlspecialchars($device['custodian']))."'></td></tr>";
    
    // Location 1
@@ -185,8 +186,9 @@ function AddDevice($User, $UserPsw)
    $inventory    = EmptyToNull($_POST['inventory']);
    $sn           = EmptyToNull($_POST['sn']);
    $ip           = EmptyToNull($_POST['ip_id']);
-   $ip2          = EmptyToNull($_POST['ip2']);
    $ip_isactive  = $_POST['ip_isactive'];
+   $port         = EmptyToNull($_POST['port']);
+   $ip2          = EmptyToNull($_POST['ip2']);
    $mac          = EmptyToNull($_POST['mac']);
    $mac2         = EmptyToNull($_POST['mac2']);
    $bt           = EmptyToNull($_POST['bt']);
@@ -194,7 +196,7 @@ function AddDevice($User, $UserPsw)
    $IMEI1        = EmptyToNull($_POST['IMEI1']);
    $IMEI2        = EmptyToNull($_POST['IMEI2']);
    $pn           = EmptyToNull($_POST['pn']);
-   $firmware     = EmptyToNull($_POST['firmware']);
+   $fw           = EmptyToNull($_POST['fw']);
    $custodian    = EmptyToNull($_POST['custodian']);
    $location1    = EmptyToNull($_POST['location1']);
    $location2    = EmptyToNull($_POST['location2']);
@@ -205,21 +207,20 @@ function AddDevice($User, $UserPsw)
 
    // SQL statement
    $stmt = $conn->prepare("INSERT INTO devices (
-      hostname,
-      description,
+      hostname, description,
       manufacturer, model, category_id, inventory, sn,
-      ip_id, ip_isactive, ip2, mac, mac2, bt, phone_no, IMEI1, IMEI2, pn, firmware,
+      ip_id, ip_isactive, port, ip2, mac, mac2, bt, phone_no, IMEI1, IMEI2, pn, fw,
       custodian, location1, location2,
       status_id, purchased, disposed,
       notes)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
    ");
 
-   $stmt->bind_param("sssssssssssssssssssssssss",
+   $stmt->bind_param("ssssssssssssssssssssssssss",
       $hostname,
       $description,
       $manufacturer, $model, $category, $inventory, $sn,
-      $ip, $ip_isactive, $ip2, $mac, $mac2, $bt, $phone_no, $IMEI1, $IMEI2, $pn, $firmware,
+      $ip, $ip_isactive, $port, $ip2, $mac, $mac2, $bt, $phone_no, $IMEI1, $IMEI2, $pn, $fw,
       $custodian, $location1, $location2,
       $status, $purchased, $disposed,
       $notes);
@@ -257,55 +258,56 @@ function UpdateDevice($User, $UserPsw)
    }
 
    // Read form data
-   $id = EmptyToNull($_POST['id']);
-   $hostname = EmptyToNull($_POST['hostname']);
-   $description = EmptyToNull($_POST['description']);
+   $id           = EmptyToNull($_POST['id']);
+   $hostname     = EmptyToNull($_POST['hostname']);
+   $description  = EmptyToNull($_POST['description']);
    $manufacturer = EmptyToNull($_POST['manufacturer']);
-   $model = EmptyToNull($_POST['model']);
-   $category_id = EmptyToNull($_POST['category_id']);
-   $inventory = EmptyToNull($_POST['inventory']);
-   $sn = EmptyToNull($_POST['sn']);
-   $ip_id = EmptyToNull($_POST['ip_id']);
-   $ip2 = EmptyToNull($_POST['ip2']);
-   $ip_isactive = $_POST['ip_isactive'];
-   $mac = EmptyToNull($_POST['mac']);
-   $mac2 = EmptyToNull($_POST['mac2']);
-   $bt = EmptyToNull($_POST['bt']);
-   $phone_no = EmptyToNull($_POST['phone_no']);
-   $IMEI1 = EmptyToNull($_POST['IMEI1']);
-   $IMEI2 = EmptyToNull($_POST['IMEI2']);
-   $sn = EmptyToNull($_POST['sn']);
-   $pn = EmptyToNull($_POST['pn']);
-   $firmware = EmptyToNull($_POST['firmware']);
-   $custodian = EmptyToNull($_POST['custodian']);
-   $location1 = EmptyToNull($_POST['location1']);
-   $location2 = EmptyToNull($_POST['location2']);
-   $purchased = EmptyToNull($_POST['purchased']);
-   $status_id = EmptyToNull($_POST['status_id']);
-   $disposed = EmptyToNull($_POST['disposed']);
-   $notes = $_POST['notes'];
+   $model        = EmptyToNull($_POST['model']);
+   $category_id  = EmptyToNull($_POST['category_id']);
+   $inventory    = EmptyToNull($_POST['inventory']);
+   $sn           = EmptyToNull($_POST['sn']);
+   $ip_id        = EmptyToNull($_POST['ip_id']);
+   $port         = EmptyToNull($_POST['port']);
+   $ip_isactive  = $_POST['ip_isactive'];
+   $ip2          = EmptyToNull($_POST['ip2']);
+   $mac          = EmptyToNull($_POST['mac']);
+   $mac2         = EmptyToNull($_POST['mac2']);
+   $bt           = EmptyToNull($_POST['bt']);
+   $phone_no     = EmptyToNull($_POST['phone_no']);
+   $IMEI1        = EmptyToNull($_POST['IMEI1']);
+   $IMEI2        = EmptyToNull($_POST['IMEI2']);
+   $sn           = EmptyToNull($_POST['sn']);
+   $pn           = EmptyToNull($_POST['pn']);
+   $fw           = EmptyToNull($_POST['fw']);
+   $custodian    = EmptyToNull($_POST['custodian']);
+   $location1    = EmptyToNull($_POST['location1']);
+   $location2    = EmptyToNull($_POST['location2']);
+   $purchased    = EmptyToNull($_POST['purchased']);
+   $status_id    = EmptyToNull($_POST['status_id']);
+   $disposed     = EmptyToNull($_POST['disposed']);
+   $notes        = $_POST['notes'];
 
    $sql = "UPDATE devices SET
       hostname = ?, description = ?,
       manufacturer = ?, model = ?, category_id = ?, inventory = ?, sn = ?,
-      ip_id = ?, ip_isactive = ?, ip2 = ?, mac = ?, mac2 = ?, bt = ?, phone_no = ?, IMEI1 = ?, IMEI2 = ?, pn = ?, firmware = ?,
+      ip_id = ?, ip_isactive = ?, port = ?, ip2 = ?, mac = ?, mac2 = ?, bt = ?, phone_no = ?, IMEI1 = ?, IMEI2 = ?, pn = ?, fw = ?,
       custodian = ?, location1 = ?, location2 = ?,
       status_id = ?, purchased = ?, disposed = ?, notes = ?
       WHERE id = ?";
 
    $stmt = $pdo->prepare($sql);
    
-   $stmt->execute([$hostname, $description, $manufacturer, $model, $category_id, $inventory, $sn, $ip_id, $ip_isactive, $ip2, $mac, $mac2, $bt, $phone_no, $IMEI1, $IMEI2, $pn, $firmware,
+   $stmt->execute([$hostname, $description, $manufacturer, $model, $category_id, $inventory, $sn, $ip_id, $ip_isactive, $port, $ip2, $mac, $mac2, $bt, $phone_no, $IMEI1, $IMEI2, $pn, $fw,
       $custodian, $location1, $location2, $status_id, $purchased, $disposed, $notes, $id]);
 
    $stmt = null;
 
-//   echo "<script>
-//   history.go(-2);
-//   window.addEventListener('pageshow', function() {
-//      location.reload(true);
-//   });
-//   </script>";
+   echo "<script>
+   history.go(-2);
+   window.addEventListener('pageshow', function() {
+      location.reload(true);
+   });
+   </script>";
 
 }
 
