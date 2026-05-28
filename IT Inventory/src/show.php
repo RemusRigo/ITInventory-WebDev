@@ -99,7 +99,7 @@ if ($result->num_rows > 0)
    }
 
    // Header row
-   echo "\n<table name='devices' id='devices' class='devices'>";
+   echo "\n<table name='items' id='items' class='items'>";
    echo "<thead>";
 
    echo "\n<tr>";
@@ -163,7 +163,7 @@ if ($result->num_rows > 0)
       echo "<td>" . htmlspecialchars($row['category_name']) . "</td>";
       echo "<td>" . htmlspecialchars($row['inventory']) . "</td>";    
       echo "<td>" . htmlspecialchars($row['sn']) . "</td>";
-      echo "<td>" . htmlspecialchars($row['ip_id']) . ($row['ip_isactive'] ? " <b style='color: green;'>&checkmark;</b>" : "") . "</td>";
+      echo "<td><a href='https://".$row['ip_id']."' class='nolink'>" . htmlspecialchars($row['ip_id']) . ($row['ip_isactive'] ? " <b style='color: green;'>&checkmark;</b>" : "") . "</a></td>";
       echo "<td>" . htmlspecialchars($row['port']) . "</td>";
       echo "<td>" . htmlspecialchars($row['ip2']) . "</td>";
       echo "<td>" . htmlspecialchars($row['mac']) . "</td>";
@@ -190,7 +190,7 @@ if ($result->num_rows > 0)
 
    if ($_GET['cat'] != "all")
    {
-      echo "<script>HideTableEmptyColumns('devices');</script>";
+      echo "<script>HideTableEmptyColumns('items');</script>";
    }
 
 

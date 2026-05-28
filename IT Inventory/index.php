@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET')
    // user is not logged in -----------------------------------------------------------------------
    if (empty($_SESSION['user_id']))
    {
-      echo"
+      echo "
       <div class='div-login'>   
         <form action='login.php' method='POST'>
           <table align='center' border='0'>
@@ -70,7 +70,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET')
             </tr>
           </table>
         </form>
-      </div>";
+      </div>&nbsp;<p>&nbsp;<p>&nbsp;<p>";
+
+      // Read Me
+      echo "<div class='scroll-box'><div id='content' class='scroll-content'></div></div>
+
+      <script src='https://cdn.jsdelivr.net/npm/marked/marked.min.js'></script>
+      <script>
+         const box = document.querySelector('.scroll-box');
+  const content = document.getElementById('content');
+
+  fetch('README.md')
+    .then(r => r.text())
+    .then(md => {
+      content.innerHTML = marked.parse(md);
+
+      // Wait for browser to render the HTML
+      requestAnimationFrame(() => {
+        const boxHeight = box.clientHeight;
+        const contentHeight = content.scrollHeight;
+
+        // Start below the box
+        content.style.top = boxHeight + 'px';
+
+        // Compute duration: 40px per second (adjust as needed)
+        const duration = (boxHeight + contentHeight) / 40;
+
+        content.animate(
+          [
+            { top: boxHeight + 'px' },
+            { top: -contentHeight + 'px' }
+          ],
+          {
+            duration: duration * 1000,
+            iterations: Infinity,
+            easing: 'linear'
+          }
+        );
+      });
+    });
+      </script>&nbsp;<p>&nbsp;<p>&nbsp;<p>";
+
    }
    else // user is logged in ----------------------------------------------------------------------
    {

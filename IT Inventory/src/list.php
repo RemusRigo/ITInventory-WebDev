@@ -2,7 +2,7 @@
 //-------------------------------------------------------------------------------------------------
 //   IT Inventory
 //      © 2026 Remus Rigo
-//         v2026-05-20
+//         v2026-05-28
 //   list locations / devices / IP's
 //-------------------------------------------------------------------------------------------------
 
@@ -122,9 +122,16 @@ if ($result->num_rows > 0)
 
          while ($row = $result->fetch_assoc())
          {
-            echo "<tr>
-               <td>". htmlspecialchars($row['id']) ."</td>
-               <td>". htmlspecialchars($row['hostname']) ."</td>
+            echo "<tr>";
+            if( htmlspecialchars($_SESSION['username'])=="admin" )
+            {
+               echo "<td><a href=index.php?updateDevice=" .htmlspecialchars($row['id']) . " class='nolink'>" . htmlspecialchars($row['id']) . "</td>";
+            }
+            else
+            {
+               echo "<td>" . htmlspecialchars($row['id']) . "</td>";
+            }
+            echo "<td>". htmlspecialchars($row['hostname']) ."</td>
                <td>". htmlspecialchars($row['description']) ."</td>
                <td>". htmlspecialchars($row['IPv4']) ."</td>
                <td>". htmlspecialchars($row['ip2']) ."</td>
@@ -153,9 +160,16 @@ if ($result->num_rows > 0)
 
       while ($row = $result->fetch_assoc())
       {
-         echo "<tr>
-            <td>". htmlspecialchars($row['id']) ."</td>
-            <td>". htmlspecialchars($row['hostname']) ."</td>
+         echo "<tr>";
+         if( htmlspecialchars($_SESSION['username'])=="admin" )
+         {
+            echo "<td><a href=index.php?updateDevice=" .htmlspecialchars($row['id']) . " class='nolink'>" . htmlspecialchars($row['id']) . "</td>";
+         }
+         else
+         {
+            echo "<td>" . htmlspecialchars($row['id']) . "</td>";
+         }
+         echo "<td>". htmlspecialchars($row['hostname']) ."</td>
             <td>". htmlspecialchars($row['description']) ."</td>
             <td>". htmlspecialchars($row['IPv4']) ."</td>
             </tr>";

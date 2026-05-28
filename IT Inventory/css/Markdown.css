@@ -1,0 +1,24 @@
+/**************************************************************************************************
+* IT Inventory
+*    © 2025 Remus Rigo
+*       v2026-05-28
+*   markdown scroll-box style
+**************************************************************************************************/
+
+.scroll-box {
+   margin: 0 auto;
+   width: 60%;
+   height: 300px;
+   overflow: hidden;
+   position: relative;
+   background: #f0f0f0;
+   color: #2c3e50; /* */
+   font-family: monospace;
+  }
+
+  .scroll-content {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
