@@ -31,6 +31,8 @@ A tool to monitor all IT devices
 
 ## Roadmap
 
+* 2026-05-28: Add: Markdown scrolling text that displays the README.md
+* 2026-05-25: Add: Edit device by click on ID in Locations and IP list
 * 2026-05-20: Add: New field in devices -> port
 * 2026-05-20: Add: If a category is selected, hide empty columns
 * 2026-05-20: Fix: Show all locations instead of showing only locations that have devices (maybe a ToDo in the future)
@@ -53,16 +55,17 @@ A tool to monitor all IT devices
 * 2026-03-31: Fix: some table formatting
 * 2026-03-20: Fix: show notes with paragraphs (if entered) instead of a single line of data
 * 2026-03-20: Fix: notes not showing on edit device
-* 2026-03-20: Add: phone number
-* 2026-03-02: Edit: use JSON to save language settings instead of PHP file
+* 2026-03-20: Add: New field in devices -> phone number
+* 2026-03-02: Add: use JSON to save language settings instead of PHP file
 * 2026-02-27: Add: Language support
 * 2026-02-27: Add: Implement Location
-* 2026-01-16: Edit: Link IP to device
-* 2026-01-15: Add: Add IP Range form
-* 2026-01-14: Edit: Add CSS style for login page
-* 2026-01-13: Edit: Reduced font size of the menu
-* 2026-01-13: Edit: Extract categories from DB and build menu
-* 2025-12-29: Add: New record in devices -> Custodian
+* 2026-02-20: Add: Edit device by click on ID in Categories
+* 2026-01-16: Add: Link IP to device
+* 2026-01-15: Add: IP Range form
+* 2026-01-14: Add: CSS style for login page
+* 2026-01-13: Fix: Reduced font size of the menu
+* 2026-01-13: Fix: Extract categories from DB and build menu
+* 2025-12-29: Add: New field in devices -> Custodian
 * 2025-12-28: Add: Update device form
 * 2025-12-27: Add: Filter by category
 * 2025-12-26: Add: Add new device
