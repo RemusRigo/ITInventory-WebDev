@@ -32,7 +32,10 @@ A tool to monitor all IT devices
 
 ## Roadmap
 
+<<<<<<< HEAD
 * 2026-06-15: Add: JQuery
+=======
+>>>>>>> 863d4d712a92411bccd4381487fdc94c4fac3f60
 * 2026-05-28: Add: Markdown scrolling text that displays the README.md
 * 2026-05-25: Add: Edit device by click on ID in Locations and IP list
 * 2026-05-20: Add: New field in devices -> port
