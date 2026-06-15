@@ -27,6 +27,8 @@ echo "\n<link rel='stylesheet' href='css/EditDevice.css'>";
 
 if (isset($_GET['cat']))
 {
+   echo "\n<link rel='stylesheet' href='https://cdn.datatables.net/2.0.0/css/dataTables.dataTables.min.css'>";
+
    echo "\n<script src='js/SortTableByColumn.js' defer></script>";
    echo "\n<script src='js/HideEmptyColumns.js'></script>";
    echo "\n<script src='js/update_filter.js' defer></script>";

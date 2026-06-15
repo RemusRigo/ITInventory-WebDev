@@ -29,8 +29,10 @@ A tool to monitor all IT devices
 
 
 
+
 ## Roadmap
 
+* 2026-06-15: Add: JQuery
 * 2026-05-28: Add: Markdown scrolling text that displays the README.md
 * 2026-05-25: Add: Edit device by click on ID in Locations and IP list
 * 2026-05-20: Add: New field in devices -> port
@@ -43,12 +45,12 @@ A tool to monitor all IT devices
 * 2026-05-14: Add: List all IP's
 * 2026-05-14: Add: List all devices in location
 * 2026-05-13: Add: List locations
-* 2026-05-11: Change: root & root password for accessing MySQL DB stored in JSON config file
+* 2026-05-11: Change: root \& root password for accessing MySQL DB stored in JSON config file
 * 2026-04-16: Change: rewrite index file / process parameters (index.php)
 * 2026-04-15: Change: rewrite main menu (src/menu.php)
 * 2026-04-14: Add: Color entire row if status is Disposed (src/show.php)
 * 2026-04-14: Fix: IP2 changed to match ###.###.###.###
-* 2026-04-09: Add: add \n in echo so the view source of the pages can be readable
+* 2026-04-09: Add: add \\n in echo so the view source of the pages can be readable
 * 2026-04-03: Changed: removed PHP code for go back (previous page) and inserted JS code
 * 2026-03-31: Fix: removed message showing # seconds until previous page
 * 2026-03-31: Add: total records found

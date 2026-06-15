@@ -1,61 +1,34 @@
 /**************************************************************************************************
 * IT Inventory
 *    © 2025 Remus Rigo
-*       v2026-01-14
+*       v2026-06-12
 *   main page style
 **************************************************************************************************/
 
 
 table.items {
-   border-collapse: collapse;
-   /* border-collapse: separate; */
-   /* border-spacing: 8px; */
-   background: white;
-   margin-top: 30px;
-   margin-bottom: 30px;
-}
-
-table.items th, table.items td {
-    border: 1px solid #ccc;
-}
-
-table.items th {
-   background: #eee;
-   position: relative;
-   text-align: left;
-   vertical-align: top;
-   white-space: nowrap;
+   table-layout: auto !important;
 }
 
 table.items tr:nth-child(even) {
     background: #f9f9f9;
 }
 
-table.items th.sorted-asc::after {
-    content: "▲";
-    position: absolute;
+table.items thead tr.filters th input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 3px 5px;
 }
 
-table.items th.sorted-desc::after {
-    content: "▼";
-    position: absolute;
+table.items td,
+table.items th {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-table.items thead th {
-   position: sticky;
-   top: 0;
-   background: #eee;
-   padding: 3px 5px;
-   z-index: 1;
-}
-
-table.items td {
-   white-space: nowrap;
-   padding: 3px 5px;
-}
 
 /* Make links look normal text */
-
 a.nolink {
    color: inherit;
    display: block; /* ensures full clickable area */

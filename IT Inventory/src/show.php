@@ -2,7 +2,7 @@
 //-------------------------------------------------------------------------------------------------
 //   IT Inventory
 //      © 2025 Remus Rigo
-//         v2026-05-15
+//         v2026-06-09
 //   show devices
 //-------------------------------------------------------------------------------------------------
 
@@ -108,15 +108,6 @@ if ($result->num_rows > 0)
    echo "<th>{$cfgLang['Description']}</th>";
    echo "<th>{$cfgLang['Manufacturer']}</th>";
    echo "<th>{$cfgLang['Model']}<br>";
-   // Model filter
-   echo "<select id='filterModel' onchange=\"updateFilter('model')\">";
-   echo "<option value=''>All</option>";
-   while ($row = $resultModels->fetch_assoc())
-   {
-      $model = htmlspecialchars($row['model'], ENT_QUOTES);
-      echo "<option value='$model'>$model</option>";
-   }
-   echo "</select></th>";
    echo "<th>{$cfgLang['Category']}</th>";
    echo "<th>{$cfgLang['Inventory']}</th>";
    echo "<th>{$cfgLang['SN']}</th>";
@@ -140,12 +131,53 @@ if ($result->num_rows > 0)
    echo "<th>{$cfgLang['Notes']}</th>";
    echo "</tr>";
 
+   echo "\n<tr class='filters'>";
+   echo "<th><input type='text' placeholder='ID'></th>";
+   echo "<th><input type='text' placeholder='HostName'></th>";
+   echo "<th><input type='text' placeholder='Description'></th>";
+   echo "<th><input type='text' placeholder='Manufacturer'></th>";
+   echo "<th><input type='text' placeholder='Model']}<br>";
+   echo "<th><input type='text' placeholder='Category'></th>";
+   echo "<th><input type='text' placeholder='Inventory'></th>";
+   echo "<th><input type='text' placeholder='SN'></th>";
+   echo "<th><input type='text' placeholder='IP'></th>";
+   echo "<th><input type='text' placeholder='Port'></th>";
+   echo "<th><input type='text' placeholder='IP'></th>";
+   echo "<th><input type='text' placeholder='MAC'></th>";
+   echo "<th><input type='text' placeholder='MAC2'></th>";
+   echo "<th><input type='text' placeholder='BT'></th>";
+   echo "<th><input type='text' placeholder='PhoneNumber'></th>";
+   echo "<th><input type='text' placeholder='IMEI'></th>";
+   echo "<th><input type='text' placeholder='IMEI'></th>";
+   echo "<th><input type='text' placeholder='PN'></th>";
+   echo "<th><input type='text' placeholder='FW'></th>";
+   echo "<th><input type='text' placeholder='Custodian'></th>";
+   echo "<th><input type='text' placeholder='Location'></th>";
+   echo "<th><input type='text' placeholder='Location'></th>";
+   echo "<th><input type='text' placeholder='Status'></th>";
+   echo "<th><input type='text' placeholder='Purchased'></th>";
+   echo "<th><input type='text' placeholder='Disposed'></th>";
+   echo "<th><input type='text' placeholder='Notes'></th>";
+   echo "</tr>";
+
    echo "</thead><tbody>";
 
    while ($row = $result->fetch_assoc())
    {
-      // Color entire row if status is Disposed
-      echo ($row['status_name'] === "Disposed") ? "\n<tr style='background-color: #d3d3d3;'>" : "\n<tr>";
+      // Color entire row based on status
+      
+      switch ($row['status_name']) {
+         case "Disposed":
+            echo "\n<tr style='background-color: #d3d3d3;'>";
+            break;
+
+         case "Inactive":
+            echo "\n<tr style='background-color: #FFFFE0;'>";
+            break;
+
+         default:
+            echo "\n<tr>";
+      }
 
       if( $loggedUser=="admin" )
       {
@@ -184,6 +216,29 @@ if ($result->num_rows > 0)
       echo "</tr>";
    }
    echo "</tbody></table>";
+
+   echo "\n<script src='https://code.jquery.com/jquery-3.7.1.min.js'></script>";
+   echo "\n<script src='https://cdn.datatables.net/2.0.0/js/dataTables.min.js'></script>";
+   echo "<script>
+    $(document).ready(function () {
+
+        var table = $('#items').DataTable({
+            pageLength: -1,
+            lengthMenu: [  [50, 100, 250, 500, -1], [50, 100, 250, 500, 'All'] ],
+            autoWidth: true,
+            orderCellsTop: true,
+            fixedHeader: true
+        });
+
+        $('#items thead tr.filters th').each(function (i) {
+            $('input', this).on('keyup change', function () {
+                table.column(i).search(this.value).draw();
+                table.columns.adjust();
+            });
+        });
+
+    });
+    </script>";
 
    $totalRows = $result->num_rows;
    echo "<p style='font-size:smaller;'>".$totalRows . " record" . ($totalRows == 1 ? "" : "s") . " found in ". ($end - $start) ." seconds";

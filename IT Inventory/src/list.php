@@ -2,7 +2,7 @@
 //-------------------------------------------------------------------------------------------------
 //   IT Inventory
 //      © 2026 Remus Rigo
-//         v2026-05-28
+//         v2026-05-29
 //   list locations / devices / IP's
 //-------------------------------------------------------------------------------------------------
 
@@ -88,7 +88,7 @@ if ($result->num_rows > 0)
       if (!isset($_GET['id']))
       {
          //echo "<script>document.querySelector(\"div[name='header_title']\").innerHTML = \"IT Inventory: Locations\";</script>";
-         echo "\n<table name='devices' id='devices' class='devices'>";
+         echo "\n<table name='items' id='items' class='items'>";
          echo "<thead>";
          echo "\n<tr>";
          echo "<th>ID</th>";
@@ -109,7 +109,7 @@ if ($result->num_rows > 0)
          //echo "<script>document.querySelector(\"div[name='header_title']\").innerHTML = \"IT Inventory: {$result->fetch_assoc()['location_name']}\";</script>";
          $result->data_seek(0);
 
-         echo "\n<table name='devices' id='devices' class='devices'>";
+         echo "\n<table name='items' id='items' class='items'>";
          echo "<thead>";
          echo "\n<tr>";
          echo "<th>ID</th>";
@@ -148,7 +148,7 @@ if ($result->num_rows > 0)
    if ($list == "ip")
    {
       echo "<script>document.querySelector(\"div[name='header_title']\").innerHTML = \"IT Inventory: IP list\";</script>";
-      echo "\n<table name='devices' id='devices' class='devices'>";
+      echo "\n<table name='items' id='items' class='items'>";
       echo "<thead>";
       echo "\n<tr>";
       echo "<th>ID</th>";
