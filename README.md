@@ -28,6 +28,15 @@ A tool to monitor all IT devices
 
 
 
+## Statistics
+
+![status](https://img.shields.io/badge/status-in%20progress-orange)
+<br>
+![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/RemusRigo/ITInventory-WebDev/total)
+
+
+
+
 ## Roadmap
 
 * 2026-06-15: Add: JQuery
