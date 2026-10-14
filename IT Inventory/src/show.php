@@ -2,7 +2,7 @@
 //-------------------------------------------------------------------------------------------------
 //   IT Inventory
 //      © 2025 Remus Rigo
-//         v2026-06-09
+//         v1.0.20260914
 //   show devices
 //-------------------------------------------------------------------------------------------------
 
@@ -71,7 +71,7 @@ else
    }
 }
 
-$conn = new mysqli("localhost", $User, $UserPsw, "it_db");
+$conn = new mysqli("localhost", $User, $UserPsw, "ITDB");
 if ($conn->connect_error)
 {
    die("Database connection failed: " . $conn->connect_error);
@@ -99,7 +99,7 @@ if ($result->num_rows > 0)
    }
 
    // Header row
-   echo "\n<table name='items' id='items' class='items'>";
+   echo "\n<table name='ItemsTable' id='ItemsTable' class='ItemsTable'>";
    echo "<thead>";
 
    echo "\n<tr>";
@@ -107,7 +107,7 @@ if ($result->num_rows > 0)
    echo "<th>{$cfgLang['HostName']}</th>";
    echo "<th>{$cfgLang['Description']}</th>";
    echo "<th>{$cfgLang['Manufacturer']}</th>";
-   echo "<th>{$cfgLang['Model']}<br>";
+   echo "<th>{$cfgLang['Model']}</th>";
    echo "<th>{$cfgLang['Category']}</th>";
    echo "<th>{$cfgLang['Inventory']}</th>";
    echo "<th>{$cfgLang['SN']}</th>";
@@ -131,12 +131,13 @@ if ($result->num_rows > 0)
    echo "<th>{$cfgLang['Notes']}</th>";
    echo "</tr>";
 
-   echo "\n<tr class='filters'>";
+   // Filter row
+   echo "\n<tr class='FilterRow'>";
    echo "<th><input type='text' placeholder='ID'></th>";
    echo "<th><input type='text' placeholder='HostName'></th>";
    echo "<th><input type='text' placeholder='Description'></th>";
    echo "<th><input type='text' placeholder='Manufacturer'></th>";
-   echo "<th><input type='text' placeholder='Model']}<br>";
+   echo "<th><input type='text' placeholder='Model'></th>";
    echo "<th><input type='text' placeholder='Category'></th>";
    echo "<th><input type='text' placeholder='Inventory'></th>";
    echo "<th><input type='text' placeholder='SN'></th>";
@@ -173,6 +174,14 @@ if ($result->num_rows > 0)
 
          case "Inactive":
             echo "\n<tr style='background-color: #FFFFE0;'>";
+            break;
+
+         case "Maintenance":
+            echo "\n<tr style='background-color: #FAE5FF;'>";
+            break;
+
+         case "Warehouse":
+            echo "\n<tr style='background-color: #E5FFE8;'>";
             break;
 
          default:
@@ -217,38 +226,17 @@ if ($result->num_rows > 0)
    }
    echo "</tbody></table>";
 
-   echo "\n<script src='https://code.jquery.com/jquery-3.7.1.min.js'></script>";
-   echo "\n<script src='https://cdn.datatables.net/2.0.0/js/dataTables.min.js'></script>";
-   echo "<script>
-    $(document).ready(function () {
+   // Hide empty columns
+   echo "\n<script src='js/HideEmptyColumns.js'></script>";
+   echo "<script>HideTableEmptyColumns('ItemsTable');</script>";
 
-        var table = $('#items').DataTable({
-            pageLength: -1,
-            lengthMenu: [  [50, 100, 250, 500, -1], [50, 100, 250, 500, 'All'] ],
-            autoWidth: true,
-            orderCellsTop: true,
-            fixedHeader: true
-        });
+   // Filter by header row
+   echo "<script src='js/FilterTable.js'></script>";
 
-        $('#items thead tr.filters th').each(function (i) {
-            $('input', this).on('keyup change', function () {
-                table.column(i).search(this.value).draw();
-                table.columns.adjust();
-            });
-        });
 
-    });
-    </script>";
-
+   // Total rows and fetch time
    $totalRows = $result->num_rows;
    echo "<p style='font-size:smaller;'>".$totalRows . " record" . ($totalRows == 1 ? "" : "s") . " found in ". ($end - $start) ." seconds";
-
-   if ($_GET['cat'] != "all")
-   {
-      echo "<script>HideTableEmptyColumns('items');</script>";
-   }
-
-
 }
 else
 {

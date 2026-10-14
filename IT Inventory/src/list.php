@@ -1,15 +1,14 @@
 <?php
 //-------------------------------------------------------------------------------------------------
-//   IT Inventory
+//   IT Inventory: list locations / devices / IP's
 //      © 2026 Remus Rigo
-//         v2026-05-29
-//   list locations / devices / IP's
+//         v1.1.20261005
 //-------------------------------------------------------------------------------------------------
 
 // starting time for sql query
 $start = microtime(true);
 
-$conn = new mysqli("localhost", $User, $UserPsw, "it_db");
+$conn = new mysqli("localhost", $User, $UserPsw, "ITDB");
 if ($conn->connect_error)
 {
    die("Database connection failed: " . $conn->connect_error);
@@ -87,13 +86,20 @@ if ($result->num_rows > 0)
       // Display only locations -------------------------------------------------------------------
       if (!isset($_GET['id']))
       {
-         //echo "<script>document.querySelector(\"div[name='header_title']\").innerHTML = \"IT Inventory: Locations\";</script>";
-         echo "\n<table name='items' id='items' class='items'>";
+         // Header row
+         echo "\n<table name='ItemsTable' id='ItemsTable' class='ItemsTable'>";
          echo "<thead>";
          echo "\n<tr>";
          echo "<th>ID</th>";
          echo "<th>{$cfgLang['Location1']}</th>";
          echo "</tr>";
+
+         // Filter row
+         echo "\n<tr class='FilterRow'>";
+         echo "<th><input type='text' placeholder='ID'></th>";
+         echo "<th><input type='text' placeholder={$cfgLang['Location1']}></th>";
+         echo "</tr>";
+
          echo "</thead><tbody>";
 
          while ($row = $result->fetch_assoc())
@@ -106,10 +112,10 @@ if ($result->num_rows > 0)
       // Display all devices on location ----------------------------------------------------------
       if (isset($_GET['id']))
       {
-         //echo "<script>document.querySelector(\"div[name='header_title']\").innerHTML = \"IT Inventory: {$result->fetch_assoc()['location_name']}\";</script>";
          $result->data_seek(0);
 
-         echo "\n<table name='items' id='items' class='items'>";
+         // Header row
+         echo "\n<table name='ItemsTable' id='ItemsTable' class='ItemsTable'>";
          echo "<thead>";
          echo "\n<tr>";
          echo "<th>ID</th>";
@@ -118,6 +124,16 @@ if ($result->num_rows > 0)
          echo "<th>{$cfgLang['IP1']}</th>";
          echo "<th>{$cfgLang['IP2']}</th>";
          echo "</tr>";
+
+         // Filter row
+         echo "\n<tr class='FilterRow'>";
+         echo "<th><input type='text' placeholder='ID'></th>";
+         echo "<th><input type='text' placeholder='HostName'></th>";
+         echo "<th><input type='text' placeholder='Description'></th>";
+         echo "<th><input type='text' placeholder='IP1'></th>";
+         echo "<th><input type='text' placeholder='IP2'></th>";
+         echo "</tr>";
+
          echo "</thead><tbody>";
 
          while ($row = $result->fetch_assoc())
@@ -140,15 +156,13 @@ if ($result->num_rows > 0)
       }
 
       echo "</tbody></table>";
-      $totalRows = $result->num_rows;
-      echo "<p style='font-size:smaller;'>".$totalRows . " record" . ($totalRows == 1 ? "" : "s") . " found in ". ($end - $start) ." seconds";
    }
 
 
    if ($list == "ip")
-   {
-      echo "<script>document.querySelector(\"div[name='header_title']\").innerHTML = \"IT Inventory: IP list\";</script>";
-      echo "\n<table name='items' id='items' class='items'>";
+   {   
+      // Header row
+      echo "\n<table name='ItemsTable' id='ItemsTable' class='ItemsTable'>";
       echo "<thead>";
       echo "\n<tr>";
       echo "<th>ID</th>";
@@ -156,6 +170,15 @@ if ($result->num_rows > 0)
       echo "<th>{$cfgLang['Description']}</th>";
       echo "<th>{$cfgLang['IP1']}</th>";
       echo "</tr>";
+
+      // Filter row
+      echo "\n<tr class='FilterRow'>";
+      echo "<th><input type='text' placeholder='ID'></th>";
+      echo "<th><input type='text' placeholder='HostName'></th>";
+      echo "<th><input type='text' placeholder='Description'></th>";
+      echo "<th><input type='text' placeholder='IP'></th>";
+      echo "</tr>";
+
       echo "</thead><tbody>";
 
       while ($row = $result->fetch_assoc())
@@ -175,9 +198,18 @@ if ($result->num_rows > 0)
             </tr>";
       }
       echo "</tbody></table>";
-      $totalRows = $result->num_rows;
-      echo "<p style='font-size:smaller;'>".$totalRows . " record" . ($totalRows == 1 ? "" : "s") . " found in ". ($end - $start) ." seconds";
+
    }
+
+   // Hide empty columns
+   echo "<script>HideTableEmptyColumns('ItemsTable');</script>";
+
+   // Filter by header row
+   echo "<script src='js/FilterTable.js'></script>";
+
+   // Total rows and fetch time
+   $totalRows = $result->num_rows;
+   echo "<p style='font-size:smaller;'>".$totalRows . " record" . ($totalRows == 1 ? "" : "s") . " found in ". ($end - $start) ." seconds";
 }
 else
 {

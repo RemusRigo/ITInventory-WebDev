@@ -1,9 +1,8 @@
 <?php
 //-------------------------------------------------------------------------------------------------
-//   IT Inventory
+//   IT Inventory: header.php: main page header
 //      © 2025 Remus Rigo
-//         v2026-05-21
-//   header
+//         v1.1.20261005
 //-------------------------------------------------------------------------------------------------
 
 $configPath = __DIR__ . '/../json/config.json';
@@ -22,17 +21,19 @@ if (empty($_SESSION['user_id']))
 
 echo "\n<link rel='stylesheet' href='css/Main.css'>";
 echo "\n<link rel='stylesheet' href='css/Menu.css'>";
-echo "\n<link rel='stylesheet' href='css/Items.css'>";
-echo "\n<link rel='stylesheet' href='css/EditDevice.css'>";
 
 if (isset($_GET['cat']))
 {
-   echo "\n<link rel='stylesheet' href='https://cdn.datatables.net/2.0.0/css/dataTables.dataTables.min.css'>";
-
-   echo "\n<script src='js/SortTableByColumn.js' defer></script>";
-   echo "\n<script src='js/HideEmptyColumns.js'></script>";
-   echo "\n<script src='js/update_filter.js' defer></script>";
+//   echo "\n<script src='js/HideEmptyColumns.js'></script>";
 }
+
+if (isset($_GET['list']))
+{
+   //
+}
+
+echo "\n<link rel='stylesheet' href='css/ItemsTable.css'>";
+echo "\n<link rel='stylesheet' href='css/EditDevice.css'>";
 
 echo "\n</head>\n<body>";
 

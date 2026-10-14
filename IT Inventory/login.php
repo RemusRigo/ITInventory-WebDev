@@ -2,7 +2,7 @@
 //-------------------------------------------------------------------------------------------------
 //   IT Inventory
 //      © 2025 Remus Rigo
-//         v2026-05-13
+//         v1.0.20260902
 //-------------------------------------------------------------------------------------------------
 
 // Load config file
@@ -12,7 +12,7 @@ $User = $config['User'] ?? 'root';
 $UserPsw = $config['UserPsw'] ?? '';
 
 session_start();
-$pdo = new PDO("mysql:host=localhost;dbname=it_db;charset=utf8", $User, $UserPsw);
+$pdo = new PDO("mysql:host=localhost;dbname=ITDB;charset=utf8", $User, $UserPsw);
 $username = $_POST['username'];
 $password = $_POST['password'];
 $stmt = $pdo->prepare("SELECT id, username, password FROM users WHERE username = ?");

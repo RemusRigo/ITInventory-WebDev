@@ -12,7 +12,7 @@ echo "\n<ul>";
 echo "\n<li><a href='index.php?cat=all'>All</a></li>";
 echo "\n<li class='sep'> </li>";
 
-$conn = new mysqli("localhost", $User, $UserPsw, "it_db");
+$conn = new mysqli("localhost", $User, $UserPsw, "ITDB");
 if ($conn->connect_error)
 {
    die("Database connection failed: " . $conn->connect_error);

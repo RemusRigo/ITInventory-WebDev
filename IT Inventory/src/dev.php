@@ -2,14 +2,14 @@
 //-------------------------------------------------------------------------------------------------
 //   IT Inventory
 //      © 2025 Remus Rigo
-//         v2026-05-21
+//         v1.0.20260807
 //   Add/Update device
 //-------------------------------------------------------------------------------------------------
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET')
 {
-   $pdo = new PDO("mysql:host=localhost;dbname=it_db;charset=utf8", $User, $UserPsw);
+   $pdo = new PDO("mysql:host=localhost;dbname=ITDB;charset=utf8", $User, $UserPsw);
    $newDevice = null;
    if (isset($_GET['addDevice']))
    {
@@ -165,7 +165,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET')
 //-------------------------------------------------------------------------------------------------
 function AddDevice($User, $UserPsw)
 {
-   $conn = new mysqli("localhost", $User, $UserPsw, "it_db");
+   $conn = new mysqli("localhost", $User, $UserPsw, "ITDB");
 
    if ($conn->connect_error) {
       die("Connection failed: " . $conn->connect_error);
@@ -249,7 +249,7 @@ function AddDevice($User, $UserPsw)
 //-------------------------------------------------------------------------------------------------
 function UpdateDevice($User, $UserPsw)
 {
-   $pdo = new PDO("mysql:host=localhost;dbname=it_db;charset=utf8", $User, $UserPsw);
+   $pdo = new PDO("mysql:host=localhost;dbname=ITDB;charset=utf8", $User, $UserPsw);
 
    // Insert NULL is value is empty
    function EmptyToNull($val)

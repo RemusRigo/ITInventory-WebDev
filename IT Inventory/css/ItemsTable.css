@@ -1,30 +1,44 @@
 /**************************************************************************************************
-* IT Inventory
-*    © 2025 Remus Rigo
-*       v2026-06-12
-*   main page style
+* IT Inventory: ItemsTable.css: Devices table style
+*    © 2025-2026 Remus Rigo
+*       v1.1.20261005
 **************************************************************************************************/
 
 
-table.items {
+table.ItemsTable {
    table-layout: auto !important;
 }
 
-table.items tr:nth-child(even) {
+table.ItemsTable tr:nth-child(even) {
     background: #f9f9f9;
 }
 
-table.items thead tr.filters th input {
+table.ItemsTable thead tr.filters th input {
     width: 100%;
     box-sizing: border-box;
     padding: 3px 5px;
 }
 
-table.items td,
-table.items th {
+table.ItemsTable td,
+table.ItemsTable th {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.dataTables_wrapper {
+   width: auto !important;
+   margin: 0 !important;
+}
+
+
+#ItemsTable {
+    width: auto !important;
+    table-layout: auto !important;
+}
+
+#ItemsTable col {
+    width: auto !important;
 }
 
 
